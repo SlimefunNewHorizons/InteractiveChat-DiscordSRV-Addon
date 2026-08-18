@@ -1,52 +1,72 @@
-[![Build Status](https://ci.loohpjames.com/job/InteractiveChat-DiscordSRV-Addon/badge/icon)](https://ci.loohpjames.com/job/InteractiveChat-DiscordSRV-Addon/)
-# InteractiveChat DiscordSRV Addon
+<div align="center">
 
-https://www.spigotmc.org/resources/83917/<br>
-https://modrinth.com/plugin/interactivechat-discordsrv-addon/<br>
-https://hangar.papermc.io/LOOHP/InteractiveChatDiscordSRV
+  <img src="https://raw.githubusercontent.com/DrakesCraft-Labs/InteractiveChatDiscordSrvAddon/master/banner.svg" alt="InteractiveChatDiscordSrvAddon Banner" width="920" />
 
-Have InteractiveChat Placeholders translated on DiscordSRV discord messages. As well as sharing items, inventories to discord and sharing images and gifs to the game from discord!
+# ⚡ InteractiveChatDiscordSrvAddon
 
-More information (screenshots, commands, permissions) about the plugin can be found on the Spigot page linked above.
+**SLIMEFUN4 ADDON · DRAKES EDITION**
 
-## Built against Spigot
-Built against [Spigot's API](https://www.spigotmc.org/wiki/buildtools/) (required mc versions are listed on the spigot page above).
-Plugins built against Spigot usually also work with [Paper](https://papermc.io/).
+<p>
+  <a href="https://github.com/DrakesCraft-Labs/InteractiveChatDiscordSrvAddon"><img src="https://img.shields.io/badge/GitHub-InteractiveChatDiscordSrvAddon-181717?style=for-the-badge&logo=github" alt="GitHub"/></a>
+  <img src="https://img.shields.io/badge/Slimefun4-Drake_Edition-22C55E?style=for-the-badge&logo=curseforge&logoColor=white" alt="Slimefun4"/>
+  <img src="https://img.shields.io/badge/Paper-1.21.11-38BDF8?style=for-the-badge&logo=minecraft&logoColor=white" alt="Paper 1.21.11"/>
+  <img src="https://img.shields.io/badge/Java-21-F89820?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 21"/>
+</p>
 
-## Development Builds
+</div>
 
-- [Jenkins](https://ci.loohpjames.com/job/InteractiveChat-DiscordSRV-Addon/)
+> ### 🏰 ¡Únete a la Comunidad Oficial de DrakesCraft!
+> 
+> * 🎮 **IP del Servidor**: `play.drakescraft.net` *(Java 1.21.11 & Bedrock)*
+> * 💬 **Discord Oficial**: [discord.gg/drakescraft](https://discord.gg/rR7FbfCt9Y)
+> * 🌐 **Web & Guía**: [drakescraft.net](https://drakescraft.net) — 🛒 **Tienda**: [tienda.drakescraft.net](https://tienda.drakescraft.net)
+> 
+> *¡Juega con este addon y más de 80 expansiones optimizadas en vivo en nuestra network de supervivencia técnica!*
 
-## Maven
-```html
-<repository>
-  <id>loohp-repo</id>
-  <url>https://repo.loohpjames.com/repository</url>
-</repository>
-```
-```html
-<dependency>
-  <groupId>com.loohp</groupId>
-  <artifactId>InteractiveChatDiscordSrvAddon</artifactId>
-  <version>VERSION</version>
-  <scope>provided</scope>
-</dependency>
-```
-Replace `VERSION` with the version number.
+---
 
-## Dependencies 
+---
 
-- [InteractiveChat](https://www.spigotmc.org/resources/75870/)
-- [DiscordSRV](https://www.spigotmc.org/resources/discordsrv.18494/)
+## 📖 Descripción General
 
-## Partnerships
+**InteractiveChatDiscordSrvAddon** es un componente esencial del ecosistema **DrakesCraft Labs** para servidores Minecraft **Paper / Purpur 1.21.11**.
 
-### Server Hosting
-**Use the link or click the banner** below to **get a 25% discount off** your first month when buying any of their gaming servers!<br>
-It also **supports my development**, take it as an alternative way to donate while getting your very own Minecraft server as well!
+Addon de Slimefun mantenido y optimizado por DrakesCraft Labs para Paper 1.21.11.
 
-*P.S. Using the link or clicking the banner rather than the code supports me more! (Costs you no extra!)*
+Todo el contenido y sus mecánicas se integran y desbloquean desde la **Guía de Slimefun (`/sf guide`)** sin necesidad de comandos especiales.
 
-**https://www.bisecthosting.com/loohp**
+---
 
-[![](https://www.bisecthosting.com/partners/custom-banners/96e11ee5-50e4-494f-854d-8c1708813abd.png)](https://www.bisecthosting.com/loohp)
+## ⚙️ Características y Sistemas Principales
+
+* 🚀 **Rendimiento Optimizado**: Construido para Java 21 sobre Paper 1.21.11 con recolección limpia de entidades y sin telemetría externa.
+* 🛡️ **Seguridad e Integridad**: Transacciones seguras en memoria y compatibilidad completa con almacenamiento `BlockStorage`.
+* 🎮 **Integración Total**: Compatible con Slimefun4-Drake, redes de logística, sistemas de energía y economía global.
+
+---
+
+## 📋 Compatibilidad Técnica
+
+| Parámetro | Requisito |
+|---|---|
+| **Servidor** | Paper / Purpur / Folia **1.21.11** |
+| **Java** | **Java 21** LTS |
+| **Core** | [Slimefun4-Drake](https://github.com/DrakesCraft-Labs/Slimefun4-Drake) |
+| **Lado** | 100% Servidor (Server-side) |
+
+---
+
+## 📥 Instalación
+
+1. Descarga la versión compilada `.jar` desde las releases del repositorio o Modrinth.
+2. Colócala en la carpeta `plugins/` de tu servidor Minecraft junto a `Slimefun4-Drake.jar`.
+3. Inicia o reinicia el servidor.
+
+---
+
+<div align="center">
+
+**Desarrollado y Mantenido por [DrakesCraft Labs](https://github.com/DrakesCraft-Labs)**  
+Licencia **GPL-3.0-only** / **MIT**.
+
+</div>
