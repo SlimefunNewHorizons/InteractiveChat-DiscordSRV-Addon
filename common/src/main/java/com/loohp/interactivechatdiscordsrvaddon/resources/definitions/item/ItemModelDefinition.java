@@ -162,10 +162,10 @@ public abstract class ItemModelDefinition {
                 if (rawWhen instanceof JSONArray) {
                     whens = new ArrayList<>();
                     for (Object element : (JSONArray) rawWhen) {
-                        whens.add((String) element);
+                        whens.add(serializeSelectCaseValue(element));
                     }
                 } else {
-                    whens = Collections.singletonList((String) rawWhen);
+                    whens = Collections.singletonList(serializeSelectCaseValue(rawWhen));
                 }
                 cases.add(new UnparsedSelectCase(whens, ItemModelDefinition.fromJson((JSONObject) caseModelJson.get("model"))));
             }
@@ -694,6 +694,20 @@ public abstract class ItemModelDefinition {
 
     private static <T> List<SelectCase<T>> parse(List<UnparsedSelectCase> list, ThrowingFunction<String, T> parser) {
         return list.stream().map(c -> c.parse(parser)).collect(Collectors.toList());
+    }
+
+    /**
+     * Component selectors in 1.21.11 may use a JSON component value rather
+     * than a plain string. Preserve it for the NMS component codec.
+     */
+    private static String serializeSelectCaseValue(Object value) {
+        if (value instanceof JSONObject) {
+            return ((JSONObject) value).toJSONString();
+        }
+        if (value instanceof JSONArray) {
+            return ((JSONArray) value).toJSONString();
+        }
+        return String.valueOf(value);
     }
 
     public static class SelectCase<T> {
