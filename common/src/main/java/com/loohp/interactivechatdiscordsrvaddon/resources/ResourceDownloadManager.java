@@ -106,6 +106,9 @@ public class ResourceDownloadManager {
     }
 
     public synchronized void applyRename() {
+        if (data == null) {
+            return;
+        }
         JSONObject renameEntries = (JSONObject) data.get("rename-entries");
         for (Object obj : renameEntries.keySet()) {
             try {
