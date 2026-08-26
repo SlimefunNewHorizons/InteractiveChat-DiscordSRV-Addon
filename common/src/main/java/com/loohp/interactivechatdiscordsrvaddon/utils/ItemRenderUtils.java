@@ -756,7 +756,12 @@ public class ItemRenderUtils {
             } else if (propertyType.equals(ItemModelDefinition.SelectPropertyType.LOCAL_TIME)) {
                 ItemModelDefinition.LocalTimeSelectProperty localTimeSelectProperty = (ItemModelDefinition.LocalTimeSelectProperty) select;
                 ULocale uLocale = new ULocale(localTimeSelectProperty.getLocale());
-                Calendar calendar = localTimeSelectProperty.getTimeZone().map(timeZone -> Calendar.getInstance(timeZone, uLocale)).orElseGet(() -> Calendar.getInstance(uLocale));
+                Calendar calendar;
+                try {
+                    calendar = localTimeSelectProperty.getTimeZone().map(timeZone -> Calendar.getInstance(timeZone, uLocale)).orElseGet(() -> Calendar.getInstance(uLocale));
+                } catch (ClassCastException e) {
+                    calendar = Calendar.getInstance(uLocale);
+                }
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(localTimeSelectProperty.getPattern(), uLocale);
                 simpleDateFormat.setCalendar(calendar);
                 String dateMatch = null;
