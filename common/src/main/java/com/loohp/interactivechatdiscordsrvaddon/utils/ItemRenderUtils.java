@@ -22,6 +22,7 @@ package com.loohp.interactivechatdiscordsrvaddon.utils;
 
 import com.ibm.icu.text.SimpleDateFormat;
 import com.ibm.icu.util.Calendar;
+import com.ibm.icu.util.TimeZone;
 import com.ibm.icu.util.ULocale;
 import com.loohp.interactivechat.InteractiveChat;
 import com.loohp.interactivechat.libs.com.cryptomorin.xseries.XMaterial;
@@ -106,6 +107,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.function.Function;
 import java.util.function.IntSupplier;
@@ -756,10 +758,23 @@ public class ItemRenderUtils {
             } else if (propertyType.equals(ItemModelDefinition.SelectPropertyType.LOCAL_TIME)) {
                 ItemModelDefinition.LocalTimeSelectProperty localTimeSelectProperty = (ItemModelDefinition.LocalTimeSelectProperty) select;
                 ULocale uLocale = new ULocale(localTimeSelectProperty.getLocale());
-                Calendar calendar;
-                try {
-                    calendar = localTimeSelectProperty.getTimeZone().map(timeZone -> Calendar.getInstance(timeZone, uLocale)).orElseGet(() -> Calendar.getInstance(uLocale));
-                } catch (ClassCastException e) {
+                // localTimeSelectProperty.getTimeZone() puede devolver una instancia de
+                // com.ibm.icu.util.TimeZone cargada por un classloader/relocacion distinta a la
+                // de esta clase (visto en el jar oficial 2026.1.1.0: ItemModelDefinition queda sin
+                // relocar mientras el resto del addon si lo esta), lo que rompe el cast implicito
+                // del Optional.map(). Se extrae el id de zona horaria por reflexion, ajeno a la
+                // identidad exacta de la clase, para no perder la zona horaria configurada.
+                Calendar calendar = null;
+                Optional<TimeZone> timeZoneOptional = localTimeSelectProperty.getTimeZone();
+                if (timeZoneOptional.isPresent()) {
+                    Object rawTimeZone = timeZoneOptional.get();
+                    try {
+                        String timeZoneId = (String) rawTimeZone.getClass().getMethod("getID").invoke(rawTimeZone);
+                        calendar = Calendar.getInstance(TimeZone.getTimeZone(timeZoneId), uLocale);
+                    } catch (ReflectiveOperationException | ClassCastException ignored) {
+                    }
+                }
+                if (calendar == null) {
                     calendar = Calendar.getInstance(uLocale);
                 }
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(localTimeSelectProperty.getPattern(), uLocale);
