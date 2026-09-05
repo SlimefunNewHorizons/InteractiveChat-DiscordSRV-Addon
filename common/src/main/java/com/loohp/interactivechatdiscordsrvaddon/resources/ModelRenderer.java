@@ -863,11 +863,9 @@ public class ModelRenderer implements AutoCloseable {
         public PlayerModelItem(PlayerModelItemPosition position, List<ModelLayer> modelLayers, List<Function<BlockModel, ValuePairs<BlockModel, Map<String, TextureResource>>>> postResolveFunction, boolean enchanted, Function<RawEnchantmentGlintParameters, BufferedImage> enchantmentGlintProvider, Function<RawEnchantmentGlintParameters, RawEnchantmentGlintData> rawEnchantmentGlintProvider) {
             this.position = position;
             this.modelLayers = modelLayers;
-            if (postResolveFunction == null) {
-                this.postResolveFunction = modelLayers.stream().map(e -> DEFAULT_POST_RESOLVE_FUNCTION).collect(Collectors.toList());
-            } else {
-                this.postResolveFunction = postResolveFunction;
-            }
+            this.postResolveFunction = IntStream.range(0, modelLayers.size())
+                    .mapToObj(i -> postResolveFunction == null || i >= postResolveFunction.size() || postResolveFunction.get(i) == null ? DEFAULT_POST_RESOLVE_FUNCTION : postResolveFunction.get(i))
+                    .collect(Collectors.toList());
             this.enchanted = enchanted;
             this.enchantmentGlintProvider = enchantmentGlintProvider;
             this.rawEnchantmentGlintProvider = rawEnchantmentGlintProvider;
