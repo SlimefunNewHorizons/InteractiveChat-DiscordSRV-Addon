@@ -93,10 +93,6 @@
                                     <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.me.lucko.jarrelocator</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>com.ibm.icu</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.com.ibm.icu</shadedPattern>
-                                </relocation>
-                                <relocation>
                                     <pattern>darwin.</pattern>
                                     <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.darwin.</shadedPattern>
                                 </relocation>
@@ -338,8 +334,8 @@
         <dependency>
             <groupId>com.ibm.icu</groupId>
             <artifactId>icu4j</artifactId>
-            <version>71.1</version>
-            <scope>provided</scope>
+            <version>72.1</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
