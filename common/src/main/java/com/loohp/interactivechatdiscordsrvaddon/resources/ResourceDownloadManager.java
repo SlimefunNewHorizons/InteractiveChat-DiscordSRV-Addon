@@ -95,8 +95,12 @@ public class ResourceDownloadManager {
                 InteractiveChatDiscordSrvAddon.plugin.sendMessage(ChatColor.RED + "[ICDiscordSrvAddon] Unable to fetch assets from \"api.loohpjames.com\". This could be an internet issue or \"api.loohpjames.com\" is down. If the plugin functions correctly after this, this error can be ignored.");
                 return;
             }
-            JSONObject client = (JSONObject) data.get("client-entries");
-            assetIndex = HTTPRequestUtils.getJSONResponse(client.get("asset-index").toString());
+            Object client = data.get("client-entries");
+            if (!(client instanceof JSONObject) || ((JSONObject) client).get("asset-index") == null) {
+                InteractiveChatDiscordSrvAddon.plugin.getLogger().warning("Unexpected assets data from \"api.loohpjames.com\" (missing client-entries.asset-index); keeping cached assets.");
+                return;
+            }
+            assetIndex = HTTPRequestUtils.getJSONResponse(((JSONObject) client).get("asset-index").toString());
         }
     }
 
@@ -106,7 +110,8 @@ public class ResourceDownloadManager {
     }
 
     public synchronized void applyRename() {
-        if (data == null) {
+        // loadExtras() builds this manager without a pack folder; renaming would then resolve against the server root
+        if (data == null || packFolder == null || !(data.get("rename-entries") instanceof JSONObject)) {
             return;
         }
         JSONObject renameEntries = (JSONObject) data.get("rename-entries");
@@ -238,20 +243,31 @@ public class ResourceDownloadManager {
     public synchronized void downloadExtras(Runnable preparation, BiConsumer<String, byte[]> dataHandler) {
         ensureData();
         try {
-            if (data.containsKey("extras-entries")) {
-                JSONObject extras = (JSONObject) data.get("extras-entries");
-                preparation.run();
+            // The API may answer an empty map as a JSON array, or omit the key while degraded: keep the cached extras then
+            Object extrasEntries = data == null ? null : data.get("extras-entries");
+            if (extrasEntries instanceof JSONObject) {
+                JSONObject extras = (JSONObject) extrasEntries;
+                Map<String, byte[]> downloaded = new LinkedHashMap<>();
                 for (Object obj : extras.keySet()) {
-                    String key = obj.toString();
-                    String value = extras.get(key).toString();
+                    Object value = extras.get(obj);
+                    if (obj == null || value == null) {
+                        continue;
+                    }
                     try {
-                        dataHandler.accept(value, HTTPRequestUtils.download(key));
+                        byte[] bytes = HTTPRequestUtils.download(obj.toString());
+                        if (bytes != null) {
+                            downloaded.put(value.toString(), bytes);
+                        }
                     } catch (Exception e) {
                     }
                 }
+                if (!downloaded.isEmpty() || extras.isEmpty()) {
+                    preparation.run();
+                    downloaded.forEach(dataHandler);
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            InteractiveChatDiscordSrvAddon.plugin.getLogger().warning("Unable to refresh extra assets: " + e);
         }
         applyRename();
     }
