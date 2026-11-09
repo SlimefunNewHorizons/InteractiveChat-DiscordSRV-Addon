@@ -1,72 +1,93 @@
 <div align="center">
 
-  <img src="https://raw.githubusercontent.com/SlimefunNewHorizons/InteractiveChatDiscordSrvAddon/master/banner.svg" alt="InteractiveChatDiscordSrvAddon Banner" width="920" />
+  <img src="https://raw.githubusercontent.com/SlimefunNewHorizons/InteractiveChat-DiscordSRV-Addon/main/banner.svg" alt="InteractiveChat-DiscordSRV-Addon Banner" width="920" />
 
-# ⚡ InteractiveChatDiscordSrvAddon
+# ⚡ InteractiveChat-DiscordSRV-Addon — Drake Edition
 
-**SLIMEFUN4 ADDON · DRAKES EDITION**
+**High-Performance Paper 1.21.11 Expansion for Slimefun4**
 
 <p>
-  <a href="https://github.com/SlimefunNewHorizons/InteractiveChatDiscordSrvAddon"><img src="https://img.shields.io/badge/GitHub-InteractiveChatDiscordSrvAddon-181717?style=for-the-badge&logo=github" alt="GitHub"/></a>
+  <a href="https://github.com/SlimefunNewHorizons/InteractiveChat-DiscordSRV-Addon"><img src="https://img.shields.io/badge/GitHub-InteractiveChat-DiscordSRV-Addon-181717?style=for-the-badge&logo=github" alt="GitHub"/></a>
   <img src="https://img.shields.io/badge/Slimefun4-Drake_Edition-22C55E?style=for-the-badge&logo=curseforge&logoColor=white" alt="Slimefun4"/>
   <img src="https://img.shields.io/badge/Paper-1.21.11-38BDF8?style=for-the-badge&logo=minecraft&logoColor=white" alt="Paper 1.21.11"/>
   <img src="https://img.shields.io/badge/Java-21-F89820?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 21"/>
 </p>
 
+[🇬🇧 **English**](README.md) · [🇪🇸 **Español**](README_ES.md)
+
 </div>
 
-> ### 🏰 ¡Únete a la Comunidad Oficial de DrakesCraft!
+> ### 🏰 Join the Official DrakesCraft Community!
 > 
-> * 🎮 **IP del Servidor**: `play.drakescraft.net` *(Java 1.21.11 & Bedrock)*
-> * 💬 **Discord Oficial**: [discord.gg/drakescraft](https://discord.gg/rv3vtXZTk7)
-> * 🌐 **Web & Guía**: [drakescraft.net](https://drakescraft.net) — 🛒 **Tienda**: [tienda.drakescraft.net](https://tienda.drakescraft.net)
+> * 🎮 **Server IP**: `mc.drakescraft.cl` *(Java 1.21.11 & Bedrock Port 25565 / 19132)*
+> * 💬 **Official Discord**: [discord.gg/drakescraft](https://discord.gg/rv3vtXZTk7) — *Check out `#general-english`!*
+> * 🌐 **Website & Guides**: [web.drakescraft.cl](https://web.drakescraft.cl) — 🛒 **Store**: [web.drakescraft.cl/store](https://web.drakescraft.cl/store.html)
 > 
-> *¡Juega con este addon y más de 80 expansiones optimizadas en vivo en nuestra network de supervivencia técnica!*
+> *Play with this addon alongside 80+ optimized expansions live on our technical survival network!*
 
 ---
 
----
+## 📖 What is InteractiveChat-DiscordSRV-Addon?
 
-## 📖 Descripción General
+**InteractiveChat-DiscordSRV-Addon** is a modular expansion within the **DrakesCraft Labs** ecosystem, specifically engineered and optimized for Minecraft **Paper / Purpur 1.21.11** servers running Java 21 LTS.
 
-**InteractiveChatDiscordSrvAddon** es un componente esencial del ecosistema **DrakesCraft Labs** para servidores Minecraft **Paper / Purpur 1.21.11**.
-
-Addon de Slimefun mantenido y optimizado por DrakesCraft Labs para Paper 1.21.11.
-
-Todo el contenido y sus mecánicas se integran y desbloquean desde la **Guía de Slimefun (`/sf guide`)** sin necesidad de comandos especiales.
+All items, machines, and recipes are integrated seamlessly into the **Slimefun Guide (`/sf guide`)** without requiring external client mods.
 
 ---
 
-## ⚙️ Características y Sistemas Principales
+## ⚙️ Key Features & Systems
 
-* 🚀 **Rendimiento Optimizado**: Construido para Java 21 sobre Paper 1.21.11 con recolección limpia de entidades y sin telemetría externa.
-* 🛡️ **Seguridad e Integridad**: Transacciones seguras en memoria y compatibilidad completa con almacenamiento `BlockStorage`.
-* 🎮 **Integración Total**: Compatible con Slimefun4-Drake, redes de logística, sistemas de energía y economía global.
+* 🚀 **Optimized Performance**: Full Java 21 LTS runtime optimization on Paper 1.21.11 with zero Garbage Collector stutter and zero external telemetry.
+* 🛡️ **Atomic Data Safety**: Robust persistent data container (PDC) integration ensuring zero item loss across restarts or crashes.
+* ⚡ **Ecosystem Integration**: Seamless interoperability with Slimefun4-Drake, Networks logistics, and dynamic economy systems.
+* 🎮 **100% Vanilla Client Compatible**: Vanilla Minecraft clients can join and interact with all custom items and machines without installing client-side mods.
 
 ---
 
-## 📋 Compatibilidad Técnica
+## 📋 Technical Compatibility
 
-| Parámetro | Requisito |
+| Parameter | Requirement |
 |---|---|
-| **Servidor** | Paper / Purpur / Folia **1.21.11** |
-| **Java** | **Java 21** LTS |
-| **Core** | [Slimefun4-Drake](https://github.com/SlimefunNewHorizons/Slimefun4-Drake) |
-| **Lado** | 100% Servidor (Server-side) |
+| **Server Software** | Paper / Purpur / Folia **1.21.11** |
+| **Java Runtime** | **Java 21** LTS |
+| **Required Core** | [Slimefun4-Drake](https://github.com/SlimefunNewHorizons/Slimefun4-Drake) |
+| **Architecture** | 100% Server-Side (Vanilla Minecraft clients can join without installing client mods) |
 
 ---
 
-## 📥 Instalación
+## 📥 Installation
 
-1. Descarga la versión compilada `.jar` desde las releases del repositorio o Modrinth.
-2. Colócala en la carpeta `plugins/` de tu servidor Minecraft junto a `Slimefun4-Drake.jar`.
-3. Inicia o reinicia el servidor.
+1. Download the latest release `.jar` from the [Releases](https://github.com/SlimefunNewHorizons/InteractiveChat-DiscordSRV-Addon/releases) tab or [Modrinth](https://modrinth.com/organization/drakescraft-labs).
+2. Place the `.jar` into your server's `plugins/` directory alongside `Slimefun4-Drake.jar`.
+3. Start or restart your server. Recipes and machines will appear automatically in the Slimefun guide (`/sf guide`).
+
+---
+
+## 🛠️ Building from Source
+
+```bash
+git clone https://github.com/SlimefunNewHorizons/InteractiveChat-DiscordSRV-Addon.git
+cd InteractiveChat-DiscordSRV-Addon
+mvn clean package -DskipTests
+```
+
+The compiled artifact will be located under `target/InteractiveChat-DiscordSRV-Addon.jar`.
 
 ---
 
 <div align="center">
 
-**Desarrollado y Mantenido por [DrakesCraft Labs](https://github.com/SlimefunNewHorizons)**  
-Licencia **GPL-3.0-only** / **MIT**.
+**Developed and Maintained by [DrakesCraft Labs](https://github.com/SlimefunNewHorizons)**  
+Licensed under **GPL-3.0-only**.
 
 </div>
+
+---
+
+## 📄 License & Upstream Attribution
+
+This project is a sovereign fork maintained by [**JackStar6677-1**](https://github.com/JackStar6677-1) under [**DrakesCraft Labs**](https://github.com/SlimefunNewHorizons).
+
+- **Original Project:** Created by the upstream authors and the open-source community ([Upstream Repository](https://github.com/Slimefun)).
+- **DrakesCraft Optimizations:** Modernized for Paper/Purpur 1.21.11+, Java 21 LTS, high concurrency, asynchronous safety, and exploit/duplication prevention.
+- **License:** Distributed under the original **GPL-3.0-only** license terms. See the [LICENSE](LICENSE) file for complete details.
