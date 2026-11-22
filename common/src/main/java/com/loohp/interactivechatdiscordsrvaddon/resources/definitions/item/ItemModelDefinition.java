@@ -142,7 +142,8 @@ public abstract class ItemModelDefinition {
                 return new ViewEntityConditionProperty(handAnimationOnSwapString, oversizedInGui, propertyType, onTrue, onFalse);
             } else if (propertyType.equals(ConditionPropertyType.COMPONENT)) {
                 String predicate = (String) rootJson.get("predicate");
-                String value = (String) rootJson.get("value");
+                Object rawValue = rootJson.get("value");
+                String value = rawValue == null ? null : serializeSelectCaseValue(rawValue);
                 return new ComponentConditionProperty(handAnimationOnSwapString, oversizedInGui, propertyType, onTrue, onFalse, predicate, value);
             } else if (propertyType.equals(ConditionPropertyType.CUSTOM_MODEL_DATA)) {
                 int index = ((Number) rootJson.getOrDefault("index", 0)).intValue();
@@ -697,8 +698,8 @@ public abstract class ItemModelDefinition {
     }
 
     /**
-     * Component selectors in 1.21.11 may use a JSON component value rather
-     * than a plain string. Preserve it for the NMS component codec.
+     * Component selectors and conditions may use JSON values rather than
+     * plain strings. Preserve their structure for the NMS component codec.
      */
     private static String serializeSelectCaseValue(Object value) {
         if (value instanceof JSONObject) {
