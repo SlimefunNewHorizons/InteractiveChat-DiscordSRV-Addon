@@ -55,6 +55,10 @@ All items, machines, and recipes are integrated seamlessly into the **Slimefun G
 
 ---
 
+### Development status
+
+The `dev` branch includes shutdown cleanup for DiscordSRV subscriptions, JDA listeners and the slash command provider. Four shutdown regression tests have been added but have **not run**: the full Maven reactor lacks legacy dependencies, and an isolated compilation also lacks Adventure API classes. This patch has no packaged artifact or live staging validation; execution on 1.21.11 or 26.x remains unverified. Required integrations are InteractiveChat and DiscordSRV.
+
 ## 📥 Installation
 
 1. Download the latest release `.jar` from the [Releases](https://github.com/SlimefunNewHorizons/InteractiveChat-DiscordSRV-Addon/releases) tab or [Modrinth](https://modrinth.com/organization/drakescraft-labs).

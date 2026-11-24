@@ -36,32 +36,31 @@ import org.bukkit.Bukkit;
 
 public class DiscordReadyEvents {
 
-    private volatile boolean init;
-
-    public DiscordReadyEvents() {
-        init = false;
-        if (DiscordSRV.isReady) {
-            init = true;
-            ready();
-        }
-    }
+    private boolean init;
+    private boolean closed;
+    private JDA jda;
+    private OutboundToDiscordEvents.JDAEvents outboundEvents;
+    private DiscordInteractionEvents interactionEvents;
+    private DiscordCommands discordCommands;
 
     @Subscribe(priority = ListenerPriority.HIGHEST)
     public void onDiscordReady(DiscordReadyEvent event) {
-        if (!init) {
-            init = true;
-            ready();
-        }
+        ready();
     }
 
-    public void ready() {
+    public synchronized void ready() {
+        if (closed || init) {
+            return;
+        }
+        init = true;
         Debug.debug("Triggering discord ready...");
         DiscordSRV discordsrv = InteractiveChatDiscordSrvAddon.discordsrv;
-        JDA jda = discordsrv.getJda();
-        jda.addEventListener(new OutboundToDiscordEvents.JDAEvents());
-        jda.addEventListener(new DiscordInteractionEvents());
+        jda = discordsrv.getJda();
+        outboundEvents = new OutboundToDiscordEvents.JDAEvents();
+        interactionEvents = new DiscordInteractionEvents();
+        jda.addEventListener(outboundEvents, interactionEvents);
 
-        DiscordCommands discordCommands = new DiscordCommands(discordsrv);
+        discordCommands = new DiscordCommands(discordsrv);
         discordCommands.init();
         Bukkit.getPluginManager().registerEvents(discordCommands, InteractiveChatDiscordSrvAddon.plugin);
         DiscordSRV.api.addSlashCommandProvider(discordCommands);
@@ -84,6 +83,23 @@ public class DiscordReadyEvents {
                     new RuntimeException("Error when getting guild from channelId (" + channelId + ")", e).printStackTrace();
                 }
             }
+        }
+    }
+
+    public synchronized void close() {
+        if (closed) {
+            return;
+        }
+        closed = true;
+        if (outboundEvents != null) {
+            // Drain any current callback before its classloader can be closed.
+            outboundEvents.close();
+        }
+        if (jda != null) {
+            jda.removeEventListener(outboundEvents, interactionEvents);
+        }
+        if (discordCommands != null) {
+            DiscordSRV.api.removeSlashCommandProvider(discordCommands);
         }
     }
 
