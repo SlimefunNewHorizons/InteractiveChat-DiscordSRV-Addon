@@ -987,8 +987,17 @@ public class OutboundToDiscordEvents implements Listener {
 
     public static class JDAEvents extends ListenerAdapter {
 
+        private volatile boolean closed;
+
+        public synchronized void close() {
+            closed = true;
+        }
+
         @Override
-        public void onMessageReceived(MessageReceivedEvent event) {
+        public synchronized void onMessageReceived(MessageReceivedEvent event) {
+            if (closed || !InteractiveChatDiscordSrvAddon.plugin.isEnabled()) {
+                return;
+            }
             try {
                 Debug.debug("Triggered onMessageReceived");
                 if (!event.getChannelType().equals(ChannelType.TEXT)) {
@@ -1007,6 +1016,9 @@ public class OutboundToDiscordEvents implements Listener {
                     return;
                 }
                 Scheduler.runTaskAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> {
+                    if (closed || !InteractiveChatDiscordSrvAddon.plugin.isEnabled()) {
+                        return;
+                    }
                     if (isWebhookMessage) {
                         handleWebhook(messageId, message, textOriginal, channel);
                     } else {

@@ -280,6 +280,8 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
     public boolean showContainers = true;
     public int rendererThreads = -1;
 
+    private final List<Object> discordSubscribers = new ArrayList<>();
+    private DiscordReadyEvents discordReadyEvents;
     private ResourceManager resourceManager;
     public ModelRenderer modelRenderer;
     public ExecutorService mediaReadingService;
@@ -297,10 +299,15 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
         return resourceManager != null;
     }
 
+    private void subscribeDiscordListener(Object listener) {
+        DiscordSRV.api.subscribe(listener);
+        discordSubscribers.add(listener);
+    }
+
     @Override
     public void onLoad() {
         DiscordSRV.api.requireIntent(GatewayIntent.GUILD_MESSAGE_REACTIONS);
-        DiscordSRV.api.subscribe(new DiscordCommandEvents());
+        subscribeDiscordListener(new DiscordCommandEvents());
     }
 
     @Override
@@ -327,10 +334,14 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
         metrics = new Metrics(this, BSTATS_PLUGIN_ID);
         Charts.setup(metrics);
 
-        DiscordSRV.api.subscribe(new DiscordReadyEvents());
-        DiscordSRV.api.subscribe(new LegacyDiscordCommandEvents());
-        DiscordSRV.api.subscribe(new OutboundToDiscordEvents());
-        DiscordSRV.api.subscribe(new InboundToGameEvents());
+        discordReadyEvents = new DiscordReadyEvents();
+        subscribeDiscordListener(discordReadyEvents);
+        if (DiscordSRV.isReady) {
+            discordReadyEvents.ready();
+        }
+        subscribeDiscordListener(new LegacyDiscordCommandEvents());
+        subscribeDiscordListener(new OutboundToDiscordEvents());
+        subscribeDiscordListener(new InboundToGameEvents());
 
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new InboundToGameEvents(), this);
@@ -442,9 +453,20 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
 
     @Override
     public void onDisable() {
+        if (discordReadyEvents != null) {
+            discordReadyEvents.close();
+        }
+        for (Object listener : discordSubscribers) {
+            DiscordSRV.api.unsubscribe(listener);
+        }
+        discordSubscribers.clear();
         DiscordInteractionEvents.unregisterAll();
-        modelRenderer.close();
-        mediaReadingService.shutdown();
+        if (modelRenderer != null) {
+            modelRenderer.close();
+        }
+        if (mediaReadingService != null) {
+            mediaReadingService.shutdown();
+        }
         if (resourceManager != null) {
             resourceManager.close();
         }
